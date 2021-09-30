@@ -33,6 +33,7 @@ public class Api {
         int productQtyToBeAdded = addRemoveProductVo.getProductQty();
         //Get Product Details
         Product productDetails = productRepository.findProductById(productId);
+        System.out.println(productDetails);
         //Get current cart
         Cart cart;
         try{
@@ -53,7 +54,6 @@ public class Api {
             int newProductQty = currProduct.getProductQty()+productQtyToBeAdded;
             currProduct.setProductQty(newProductQty);
             currProduct.setProductTotalPrice(newProductQty*productDetails.getPrice());
-            cartRepository.save(cart);
         }
         else{
             ProductVo currProduct = new ProductVo();
@@ -63,6 +63,7 @@ public class Api {
             currProduct.setProductQty(productQtyToBeAdded);
             currProduct.setProductTotalPrice(productDetails.getPrice()*productQtyToBeAdded);
         }
+        cartRepository.save(cart);
         return ResponseEntity.ok("Cart updated");
     }
 
@@ -111,11 +112,31 @@ public class Api {
         return response;
     }
 
+    @PostMapping("/cart/checkout")
+    public ResponseEntity<String> checkoutCart(){
+        int customerId = 1;
+        //get cart
+        Cart cart = cartRepository.findCartByCustomerId(customerId);
+        //get products
+        Map<Integer,ProductVo> products = cart.getProducts();
+        for(ProductVo product: products.values()){
+            int productId = product.getProductId();
+            Product inventoryProduct = productRepository.findProductById(productId);
+            if(inventoryProduct.getQty()<product.getProductQty()) {
+                return ResponseEntity.ok("Product with id " + productId + " is out of stock");
+            }
+        }
+        for(ProductVo product: products.values()){
+            int productId = product.getProductId();
+            Product inventoryProduct = productRepository.findProductById(productId);
+            inventoryProduct.setQty(inventoryProduct.getQty()-product.getProductQty());
+        }
+        return ResponseEntity.ok("Checked out!");
+    }
+
     @GetMapping("/test")
     public ResponseEntity<Product> getProduct(@RequestParam int id){
-        //log.info(String.valueOf(productRepository.findProductById(id)));
         return ResponseEntity.ok(productRepository.findProductById(id));
-        //return ResponseEntity.ok(null);
     }
 
 }
