@@ -1,19 +1,40 @@
 import React, { Component } from "react";
 import { Button, Form } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
+  const handleSubmit = (event) => {
+    const formData = new FormData(event.currentTarget);
+    event.preventDefault();
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+  };
   return (
-    <Form>
-      <Form.Field>
-        <label>Username</label>
-        <input placeholder="Username" />
-      </Form.Field>
-      <Form.Field>
-        <label>Password</label>
-        <input placeholder="Password" />
-      </Form.Field>
-      <Button type="submit">Login</Button>
-    </Form>
+    <div>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Input
+            name="username"
+            label="Username"
+            placeholder="Username"
+            width={6}
+          />
+          <Form.Input
+            type="password"
+            name="password"
+            label="Password"
+            placeholder="Password"
+            width={6}
+          />
+        </Form.Group>
+
+        <Button type="submit">Login</Button>
+      </Form>
+      <Link to="/register">
+        <Button>Register</Button>
+      </Link>
+    </div>
   );
 };
 
