@@ -1,14 +1,12 @@
 import React, { useState,useEffect } from 'react';
-import { Button, Card, Image } from 'semantic-ui-react'
-import { useHistory } from 'react-router';
+import { Button, Card, Image,Container } from 'semantic-ui-react'
 
 export default function ProductList() {
- 
- 
 
 
     return (
-        <div>
+        
+        <Container>
               <Card.Group>
     <Card>
       <Card.Content>
@@ -17,7 +15,7 @@ export default function ProductList() {
           size='medium'
           src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
         />
-        <Card.Header>Product titlye</Card.Header>
+        <Card.Header>Product title</Card.Header>
         <Card.Meta>Price</Card.Meta>
   
       </Card.Content>
@@ -34,6 +32,6 @@ export default function ProductList() {
     </Card>
     
   </Card.Group>
-        </div>
+  </Container>
     )
 }
