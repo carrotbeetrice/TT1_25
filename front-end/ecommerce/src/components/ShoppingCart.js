@@ -11,10 +11,15 @@ const ProductSection = ({
     updateLocalStorage,
     productid,
 }) => {
+    const update = (quantity) => {
+        setQuantity(quantity);
+        updateLocalStorage(productid, quantity);
+    };
+
     const [q, setQuantity] = useState(quantity);
     return (
         <div style={{ display: "flex", flexDirection: "row" }}>
-            <h1 style={{ marginRight: "10px", width:"20px" }}>{index}</h1>
+            <h1 style={{ marginRight: "10px", width: "20px" }}>{index}</h1>
             <Segment
                 style={{ marginTop: "4px", width: "100%" }}
                 padded="very"
@@ -22,7 +27,7 @@ const ProductSection = ({
             >
                 <div style={{ display: "flex", flexDirection: "row" }}>
                     <Image src={image} size="small" bordered />
-                    <div style={{ marginLeft: "10px", width:"100%" }}>
+                    <div style={{ marginLeft: "10px", width: "100%" }}>
                         <h1>{title}</h1>
                         <div style={{ overflow: "hidden", maxHeight: "30%" }}>
                             {description}
@@ -30,13 +35,10 @@ const ProductSection = ({
                         <h5>Quantity: </h5>{" "}
                         <Input
                             value={q}
-                            onChange={(e) => {
-                                setQuantity(e.target.value);
-                                updateLocalStorage(productid, quantity);
-                            }}
+                            onChange={(e) => update(e.target.value)}
                         />
-                        <Button onClick={() => setQuantity(q + 1)}>+</Button>
-                        <Button onClick={() => setQuantity(q - 1)}>-</Button>
+                        <Button onClick={() => update(q + 1)}>+</Button>
+                        <Button onClick={() => update(q - 1)}>-</Button>
                         <h5>Total Cost: ${price * q}</h5>
                     </div>
                 </div>
@@ -48,11 +50,17 @@ const ProductSection = ({
 const ShoppingCart = () => {
     const [products, setProducts] = useState([]);
     var products_in_storage = localStorage.getItem("products_added");
+
     const updateLocalStorage = (productid, quantity) => {
-        var product_to_update = products.find((p) => p.id === productid);
-        product_to_update.qty = quantity;
+        var product_to_update = products.findIndex((p) => p.id === productid);
+        console.log(quantity);
+        products[product_to_update].qty = quantity;
+        console.log(products[product_to_update]);
+
+        setProducts([...products]);
         localStorage.setItem("products_added", JSON.stringify(products));
     };
+
     useEffect(() => {
         if (products_in_storage === null) {
             setProducts([
@@ -83,6 +91,7 @@ const ShoppingCart = () => {
 
     return (
         <div>
+            <h1>Your Shopping Cart</h1>
             <div
                 style={{
                     width: "70%",
@@ -102,8 +111,21 @@ const ShoppingCart = () => {
                         updateLocalStorage={updateLocalStorage}
                     />
                 ))}
-    
             </div>
+            <Input
+                style={{ marginTop: "30px" }}
+                action={{
+                    color: "teal",
+                    labelPosition: "left",
+                    icon: "cart",
+                    content: "Checkout",
+                }}
+                actionPosition="left"
+                placeholder="Search..."
+                value={products.reduce((prev, curr) => {
+                    return prev + curr.qty * curr.price;
+                }, 0)}
+            />
         </div>
     );
 };
