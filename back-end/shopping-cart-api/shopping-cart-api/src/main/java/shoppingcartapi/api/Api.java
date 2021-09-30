@@ -12,7 +12,9 @@ import shoppingcartapi.repositories.ProductRepository;
 import shoppingcartapi.vo.AddRemoveProductVo;
 import shoppingcartapi.vo.ProductVo;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @Slf4j
@@ -32,7 +34,16 @@ public class Api {
         //Get Product Details
         Product productDetails = productRepository.findProductById(productId);
         //Get current cart
-        Cart cart = cartRepository.findCartByCustomerId(customerId);
+        Cart cart;
+        try{
+            cart = cartRepository.findCartByCustomerId(customerId);
+        }
+        catch(Exception e){
+            cart = new Cart();
+            cart.setCustomerId(customerId);
+            cart.setId(UUID.randomUUID().toString());
+            cart.setProducts(new HashMap<>());
+        }
         //Get current list of products
         Map<Integer, ProductVo> products = cart.getProducts();
         //Check if product is currently in cart
@@ -61,7 +72,16 @@ public class Api {
         int productId = addRemoveProductVo.getProductId();
         int productQtyToBeRemoved = addRemoveProductVo.getProductQty();
         //Get current cart
-        Cart cart = cartRepository.findCartByCustomerId(customerId);
+        Cart cart;
+        try{
+            cart = cartRepository.findCartByCustomerId(customerId);
+        }
+        catch(Exception e){
+            cart = new Cart();
+            cart.setCustomerId(customerId);
+            cart.setId(UUID.randomUUID().toString());
+            cart.setProducts(new HashMap<>());
+        }
         //Get current list of products
         Map<Integer, ProductVo> products = cart.getProducts();
         //Check if product is currently in cart
