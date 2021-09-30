@@ -21,7 +21,9 @@ const Login = () => {
       notification.success({
           message: "login successfully."
       });
+      alert("Login Successful!");
       history.push("/"); //Navigate after successful login
+      
     }).catch(error => {
       alert('Login Failed. Try Again') // Error Handling
     });
@@ -29,6 +31,7 @@ const Login = () => {
   };
   return (
     <div>
+      <h1>Login</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Input

@@ -32,6 +32,7 @@ const Register = () => {
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
+    alert("Register Successful!");
     history.push("/"); //Navigate after successful login
   };
   return (
