@@ -24,21 +24,54 @@ const options = [
 
 const Register = () => {
   console.log(newCurrentDate);
+  const handleSubmit = (event) => {
+    const formData = new FormData(event.currentTarget);
+    event.preventDefault();
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+  };
   return (
     <div>
       <h1>Register</h1>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group>
-          <Form.Input label="Username" placeholder="Username" width={6} />
-          <Form.Input label="Password" placeholder="Password" width={6} />
+          <Form.Input
+            name="username"
+            label="Username"
+            placeholder="Username"
+            width={6}
+          />
+          <Form.Input
+            name="password"
+            label="Password"
+            placeholder="Password"
+            width={6}
+          />
         </Form.Group>
         <Form.Group>
-          <Form.Input label="FirstName" placeholder="First Name" width={6} />
-          <Form.Input label="LastName" placeholder="Last Name" width={6} />
+          <Form.Input
+            name="firstname"
+            label="FirstName"
+            placeholder="First Name"
+            width={6}
+          />
+          <Form.Input
+            name="lastname"
+            label="LastName"
+            placeholder="Last Name"
+            width={6}
+          />
         </Form.Group>
         <Form.Group>
-          <Form.Input label="PostalCode" placeholder="Postal Code" width={6} />
+          <Form.Input
+            name="postalcode"
+            label="PostalCode"
+            placeholder="Postal Code"
+            width={6}
+          />
           <Form.Select
+            name="gender"
             fluid
             label="Gender"
             options={options}
