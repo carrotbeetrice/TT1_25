@@ -6,6 +6,12 @@ import ProductList from "./components/ProductList";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Header from './components/Header';
+import axios from "axios";
+
+axios.defaults.baseURL = "http://localhost:8080"
+axios.defaults.authURL = "http://localhost:5000"
+// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+
 
 function App() {
   return (
