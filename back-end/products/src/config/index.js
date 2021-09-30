@@ -8,14 +8,12 @@ module.exports = {
   /**
    * MongoDB configs
    */
-  db_string: process.env.CON_STRING,
+  db: {
+    conString: process.env.CON_STRING,
+    dbName: process.env.DB_NAME,
+  },
   /**
    * JWT Secrets
    */
-  jwt: {
-    accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
-    refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
-    maxAccessTokenAge: "12h",
-    maxRefreshTokenAge: "168h",
-  },
+  accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
 };

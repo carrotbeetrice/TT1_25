@@ -1,16 +1,11 @@
 const mongoose = require("mongoose");
-const { db_string } = require("../config");
+const { conString, dbName } = require("../config").db;
 
 const connectToDB = () => {
-  mongoose.connect(db_string, {
+  mongoose.connect(conString, {
     dbName: "tektrek",
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  });
-  var db = mongoose.connection;
-  db.on("error", console.error.bind(console, "Error connecting to MongoDB"));
-  db.once("open", function () {
-    console.log("Connected successfully");
   });
 };
 
