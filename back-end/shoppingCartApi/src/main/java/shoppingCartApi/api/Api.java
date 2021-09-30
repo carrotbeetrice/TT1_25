@@ -63,7 +63,10 @@ public class Api {
             currProduct.setProductTotalPrice(productDetails.getPrice()*productQtyToBeAdded);
             products.add(currProduct);
         }
-        cartRepository.deleteById(cart.getId());
+        log.info("deleting cart");
+        cartRepository.deleteByCustomerId(customerId);
+        log.info("inserting cart");
+        cart.setId(UUID.randomUUID().toString());
         cartRepository.save(cart);
         return ResponseEntity.ok("Cart updated");
     }

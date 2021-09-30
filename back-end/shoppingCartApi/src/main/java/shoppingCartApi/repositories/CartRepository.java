@@ -8,4 +8,6 @@ public interface CartRepository extends MongoRepository<Cart,String> {
 
     @Query(value = "{customerId: ?0 }",fields = "{_id:0}")
     Cart findCartByCustomerId(int customerId);
+
+    void deleteByCustomerId(int customerId);
 }
