@@ -19,7 +19,6 @@ const ProductSection = ({
     const [q, setQuantity] = useState(quantity);
     return (
         <div style={{ display: "flex", flexDirection: "row" }}>
-            <h1 style={{ marginRight: "10px", width: "20px" }}>{index}</h1>
             <Segment
                 style={{ marginTop: "4px", width: "100%" }}
                 padded="very"
@@ -53,16 +52,22 @@ const ShoppingCart = () => {
 
     const updateLocalStorage = (productid, quantity) => {
         var product_to_update = products.findIndex((p) => p.id === productid);
-        console.log(quantity);
         products[product_to_update].qty = quantity;
-        console.log(products[product_to_update]);
 
         setProducts([...products]);
         localStorage.setItem("products_added", JSON.stringify(products));
     };
 
+    const checkout = () => {};
+    const removeProduct = (idx) => {
+        products.pop(idx)
+        console.log(products);
+        setProducts([...products]);
+        localStorage.setItem("products_added", JSON.stringify(products));
+    };
+
     useEffect(() => {
-        if (products_in_storage === null) {
+        if (products_in_storage === null || products_in_storage.length === 0 || products_in_storage === "[]") {
             setProducts([
                 {
                     id: 1,
@@ -99,27 +104,32 @@ const ShoppingCart = () => {
                 }}
             >
                 {products.map((p, index) => (
-                    <ProductSection
-                        key={index}
-                        title={p.title}
-                        image={p.image}
-                        price={p.price}
-                        quantity={p.qty}
-                        description={p.description}
-                        productid={p.id}
-                        index={index + 1}
-                        updateLocalStorage={updateLocalStorage}
-                    />
+                    <div style={{display:"flex", flexDirection:"row"}}>
+                        <div>
+                        <Button color="red" onClick={()=>removeProduct(index)}size="mini">X</Button>
+                        </div>
+                        <ProductSection
+                            key={index}
+                            title={p.title}
+                            image={p.image}
+                            price={p.price}
+                            quantity={p.qty}
+                            description={p.description}
+                            productid={p.id}
+                            index={index + 1}
+                            updateLocalStorage={updateLocalStorage}
+                            onDelete={removeProduct}
+                        />
+                    </div>
                 ))}
             </div>
             <Input
-                style={{ marginTop: "30px" }}
-                action={{
-                    color: "teal",
-                    labelPosition: "left",
-                    icon: "cart",
-                    content: "Checkout",
-                }}
+                style={{ marginTop: "30px", marginBottom: "50px" }}
+                action={
+                    <Button color="teal" onClick={checkout}>
+                        Checkout
+                    </Button>
+                }
                 actionPosition="left"
                 placeholder="Search..."
                 value={products.reduce((prev, curr) => {
