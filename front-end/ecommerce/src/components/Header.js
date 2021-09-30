@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default function Header() {
     return (
-    <Container fluid >
+    <Container fluid style={{marginBottom: "50px"}}>
     <Menu fixed='top' inverted>
         <Link to='/'>
         <Menu.Item name='home'>
@@ -31,7 +31,6 @@ export default function Header() {
           </Link>
         </Menu.Menu>
     </Menu>
-
     </Container>
     )
 }
