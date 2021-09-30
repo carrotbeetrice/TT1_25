@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
 
 var myCurrentDate = new Date();
 var date =
@@ -23,6 +24,7 @@ const options = [
 ];
 
 const Register = () => {
+  const history = useHistory();
   console.log(newCurrentDate);
   const handleSubmit = (event) => {
     const formData = new FormData(event.currentTarget);
@@ -30,6 +32,7 @@ const Register = () => {
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
+    history.push("/"); //Navigate after successful login
   };
   return (
     <div>
