@@ -18,7 +18,7 @@ const ProductSection = ({
 
     const [q, setQuantity] = useState(quantity);
     return (
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
             <Segment
                 style={{ marginTop: "4px", width: "100%" }}
                 padded="very"
@@ -60,7 +60,7 @@ const ShoppingCart = () => {
 
     const checkout = () => {};
     const removeProduct = (idx) => {
-        products.pop(idx)
+        products.splice(idx, 1)
         console.log(products);
         setProducts([...products]);
         localStorage.setItem("products_added", JSON.stringify(products));
