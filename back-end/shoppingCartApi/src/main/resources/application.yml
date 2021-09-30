@@ -1,0 +1,15 @@
+mongodb:
+  authentication-database: admin
+  database: tektrek
+  username: superuser
+  password: dbstektrek0930
+  uri: mongodb://140.238.61.72:42017
+  auto-index-creation: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.data.mongodb.repository.query: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
