@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const history = useHistory();
@@ -14,20 +15,14 @@ const Login = () => {
       method: "POST",
       body: formData,
     };
-
-    /*
-    fetch('http://localhost:8000/api/login', options).then((response) => {
-
-      notification.success({
-          message: "login successfully."
-      });
+    fetch('http://localhost:8080/auth/login', options).then((response) => {
       alert("Login Successful!");
       history.push("/"); //Navigate after successful login
       
     }).catch(error => {
       alert('Login Failed. Try Again') // Error Handling
     });
-    */
+    
   };
   return (
     <div>
